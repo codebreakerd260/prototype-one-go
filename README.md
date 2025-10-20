@@ -1,73 +1,55 @@
-# Welcome to your Lovable project
+# VYUGA - Virtual Try-On for Ethnic Wear
 
-## Project info
+VYUGA is a modern e-commerce application that allows users to virtually try on ethnic wear, such as sarees and lehengas, using advanced AI technology. See how you look before you buy, eliminating guesswork and reducing returns.
 
-**URL**: https://lovable.dev/projects/b4ea5cdc-aa92-4612-ab66-1b779c74b085
+## Key Features
 
-## How can I edit this code?
+- **AI-Powered Virtual Try-On**: Upload a full-body photo and see how any garment looks on you in seconds.
+- **Extensive Product Catalog**: Browse and shop from a wide collection of ethnic wear.
+- **Product Details**: View detailed information, ratings, and reviews for each item.
+- **Shopping Cart**: Add items to your cart and manage your selections.
+- **Secure and Private**: Your photos are encrypted and automatically deleted after 24 hours.
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+This project is built with a modern, type-safe, and efficient technology stack:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b4ea5cdc-aa92-4612-ab66-1b779c74b085) and start prompting.
+- **Frontend Framework**: [React](https://reactjs.org/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **UI Components**: [shadcn/ui](https://ui.shadcn.com/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **State Management**: [Zustand](https://zustand-demo.pmnd.rs/)
+- **Routing**: [React Router](https://reactrouter.com/)
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+To get a local copy up and running, follow these simple steps.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+You need to have [Bun](https://bun.sh/) installed on your machine.
 
-Follow these steps:
+### Installation & Setup
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+1.  **Clone the repository:**
+    ```sh
+    git clone <YOUR_REPOSITORY_URL>
+    ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2.  **Navigate to the project directory:**
+    ```sh
+    cd <PROJECT_DIRECTORY>
+    ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+3.  **Install dependencies:**
+    ```sh
+    bun install
+    ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+4.  **Run the development server:**
+    ```sh
+    bun run dev
+    ```
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/b4ea5cdc-aa92-4612-ab66-1b779c74b085) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+The application will be available at `http://127.0.0.1:8080` (or the next available port).
