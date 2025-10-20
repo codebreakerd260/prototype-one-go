@@ -1,0 +1,17 @@
+{
+  "name": "@vyuga/utils",
+  "version": "1.0.0",
+  "description": "Shared utils for Vyuga applications",
+  "main": "index.ts",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.6.0"
+  },
+   "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
