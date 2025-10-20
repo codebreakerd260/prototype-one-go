@@ -1,0 +1,10 @@
+{
+  "name": "@vyuga/types",
+  "version": "1.0.0",
+  "description": "Shared types for Vyuga applications",
+  "main": "index.ts",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
