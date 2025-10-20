@@ -15,19 +15,26 @@ export default function TryOnResult() {
 
   useEffect(() => {
     // Simulate processing delay (mock ML pipeline)
+    const processingTime = Math.random() * (5000 - 2000) + 2000; // Random delay between 2-5 seconds
     const timer = setTimeout(() => {
       const sessionData = sessionStorage.getItem('tryOnSession');
       if (sessionData) {
-        const parsed = JSON.parse(sessionData);
-        setSession({
-          ...parsed,
-          status: 'COMPLETED',
-          qualityScore: 0.95,
-          completedAt: new Date().toISOString()
-        });
+        try {
+          const parsed = JSON.parse(sessionData);
+          if (parsed && parsed.id === id) {
+            setSession({
+              ...parsed,
+              status: 'COMPLETED',
+              qualityScore: Math.random() * (0.98 - 0.85) + 0.85, // Random quality score
+              completedAt: new Date().toISOString()
+            });
+          }
+        } catch (error) {
+          console.error("Failed to parse session data:", error);
+        }
       }
       setIsLoading(false);
-    }, 3000);
+    }, processingTime);
 
     return () => clearTimeout(timer);
   }, [id]);

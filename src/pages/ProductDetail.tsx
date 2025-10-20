@@ -4,6 +4,7 @@ import { Star, Sparkles, ShoppingCart, Heart, Share2, Check } from 'lucide-react
 import { useState } from 'react';
 import { useCartStore } from '@/store/cartStore';
 import { toast } from 'sonner';
+import DetailRow from '@/components/DetailRow';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -130,21 +131,21 @@ export default function ProductDetail() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-4 mb-8">
-              <Link
-                to={`/try-on?garmentId=${garment.id}`}
-                className="flex-1 py-4 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-semibold text-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
-              >
-                <Sparkles className="w-5 h-5" />
-                Virtual Try-On
-              </Link>
+            <div className="flex flex-col gap-4 mb-8">
               <button
                 onClick={handleAddToCart}
-                className="flex-1 py-4 bg-primary text-primary-foreground rounded-xl font-semibold text-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
+                className="w-full py-4 bg-primary text-primary-foreground rounded-xl font-bold text-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
               >
                 <ShoppingCart className="w-5 h-5" />
                 Add to Cart
               </button>
+              <Link
+                to={`/try-on?garmentId=${garment.id}`}
+                className="w-full py-3 border-2 border-primary text-primary rounded-xl font-semibold text-center hover:bg-primary hover:text-primary-foreground transition-all flex items-center justify-center gap-2"
+              >
+                <Sparkles className="w-5 h-5" />
+                Virtual Try-On
+              </Link>
             </div>
 
             {/* Additional Actions */}
@@ -183,11 +184,3 @@ export default function ProductDetail() {
   );
 }
 
-function DetailRow({ label, value }: { label: string; value: React.ReactNode }) {
-  return (
-    <div className="flex items-center justify-between py-3 border-b border-border last:border-0">
-      <span className="font-semibold text-muted-foreground">{label}</span>
-      <span className="font-medium">{value}</span>
-    </div>
-  );
-}

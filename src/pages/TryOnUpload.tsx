@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Upload, Camera, AlertCircle, CheckCircle, X } from 'lucide-react';
 import { mockGarments } from '@/data/mockGarments';
+import TipItem from '@/components/TipItem';
 
 export default function TryOnUpload() {
   const navigate = useNavigate();
@@ -174,23 +175,27 @@ export default function TryOnUpload() {
                 <TipItem
                   icon={<CheckCircle className="w-5 h-5 text-green-600" />}
                   text="Stand in good lighting (avoid shadows)"
+                  isRecommendation={true}
                 />
                 <TipItem
                   icon={<CheckCircle className="w-5 h-5 text-green-600" />}
                   text="Wear fitted clothes (not loose garments)"
+                  isRecommendation={true}
                 />
                 <TipItem
                   icon={<CheckCircle className="w-5 h-5 text-green-600" />}
                   text="Face the camera directly"
+                  isRecommendation={true}
                 />
                 <TipItem
                   icon={<CheckCircle className="w-5 h-5 text-green-600" />}
                   text="Full body visible (head to toe)"
+                  isRecommendation={true}
                 />
                 <TipItem
                   icon={<AlertCircle className="w-5 h-5 text-destructive" />}
                   text="Avoid group photos or mirrors"
-                  negative
+                  isRecommendation={false}
                 />
               </ul>
             </div>
@@ -211,11 +216,3 @@ export default function TryOnUpload() {
   );
 }
 
-function TipItem({ icon, text, negative }: { icon: React.ReactNode; text: string; negative?: boolean }) {
-  return (
-    <li className="flex items-start gap-3">
-      {icon}
-      <span className={negative ? 'text-muted-foreground' : ''}>{text}</span>
-    </li>
-  );
-}
