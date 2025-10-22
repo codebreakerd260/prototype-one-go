@@ -1,34 +1,16 @@
 import { useState, useMemo } from 'react';
-import { useProducts } from '@/api/products';
+import { mockGarments, categories, priceRanges } from '@/data/mockGarments';
 import ProductCard from '@/components/ProductCard';
-import { Filter, Loader2 } from 'lucide-react';
-
-// Hardcoded for now, can be dynamic later
-const categories = [
-    { id: 'saree', name: 'Sarees', count: 5 },
-    { id: 'kurta', name: 'Kurtas', count: 8 },
-    { id: 'lehenga', name: 'Lehengas', count: 3 },
-    { id: 'sherwani', name: 'Sherwanis', count: 4 },
-];
-
-const priceRanges = [
-    { id: '0-50', label: 'Under $50', min: 0, max: 50 },
-    { id: '50-100', label: '$50 - $100', min: 50, max: 100 },
-    { id: '100-200', label: '$100 - $200', min: 100, max: 200 },
-    { id: '200-500', label: '$200 - $500', min: 200, max: 500 },
-];
-
+import { Filter } from 'lucide-react';
 
 export default function Shop() {
-  const { data: products, isLoading, isError } = useProducts();
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedPriceRange, setSelectedPriceRange] = useState<string>('');
   const [showFilters, setShowFilters] = useState(false);
 
   const filteredGarments = useMemo(() => {
-    if (!products) return [];
-    return products.filter((garment) => {
-      // Category filter - Assuming product has a 'category' property
+    return mockGarments.filter((garment) => {
+      // Category filter
       if (selectedCategory && garment.category !== selectedCategory) {
         return false;
       }
@@ -37,7 +19,7 @@ export default function Shop() {
       if (selectedPriceRange) {
         const range = priceRanges.find(r => r.id === selectedPriceRange);
         if (range) {
-          const price = parseFloat(garment.price);
+          const price = garment.discountPrice || garment.price;
           if (price < range.min || price > range.max) {
             return false;
           }
@@ -46,7 +28,7 @@ export default function Shop() {
 
       return true;
     });
-  }, [products, selectedCategory, selectedPriceRange]);
+  }, [selectedCategory, selectedPriceRange]);
 
   const clearFilters = () => {
     setSelectedCategory('');
@@ -167,17 +149,7 @@ export default function Shop() {
               </p>
             </div>
 
-            {isLoading ? (
-              <div className="flex justify-center items-center py-20">
-                <Loader2 className="w-12 h-12 animate-spin" />
-              </div>
-            ) : isError ? (
-                <div className="text-center py-20">
-                    <div className="text-6xl mb-4">😢</div>
-                    <h3 className="text-2xl font-semibold mb-2">Error loading products</h3>
-                    <p className="text-muted-foreground">Please try again later.</p>
-                </div>
-            ) : filteredGarments.length > 0 ? (
+            {filteredGarments.length > 0 ? (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredGarments.map((garment) => (
                   <ProductCard key={garment.id} garment={garment} />

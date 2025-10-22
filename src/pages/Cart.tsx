@@ -1,38 +1,15 @@
 import { Link } from 'react-router-dom';
-import { useCart, useRemoveFromCart, useAddToCart } from '@/api/cart';
-import { Trash2, ShoppingBag, ArrowRight, Minus, Plus, Loader2 } from 'lucide-react';
-import { useUser } from '@/api/auth';
+import { useCartStore } from '@/store/cartStore';
+import { Trash2, ShoppingBag, ArrowRight, Minus, Plus } from 'lucide-react';
 
 export default function Cart() {
-  const { data: user } = useUser();
-  const { data: cart, isLoading, isError } = useCart(user);
-  const removeFromCart = useRemoveFromCart();
-  const addToCart = useAddToCart();
+  const { items, removeItem, updateQuantity, total } = useCartStore();
 
-  if (isLoading) {
-    return (
-        <div className="container mx-auto px-4 py-20 text-center min-h-screen flex items-center justify-center">
-            <Loader2 className="w-12 h-12 animate-spin" />
-        </div>
-    );
-  }
-
-  if (isError || !cart) {
-    return (
-        <div className="container mx-auto px-4 py-20 text-center min-h-screen flex items-center justify-center">
-            <div className="text-6xl mb-4">😢</div>
-            <h3 className="text-2xl font-semibold mb-2">Error loading cart</h3>
-            <p className="text-muted-foreground">Please try again later.</p>
-        </div>
-    );
-  }
-
-  const { cartItems } = cart;
-  const subtotal = cartItems.reduce((acc, item) => acc + (Number(item.product.price) * item.quantity), 0);
+  const subtotal = total();
   const gst = Math.round(subtotal * 0.18);
   const finalTotal = subtotal + gst;
 
-  if (cartItems.length === 0) {
+  if (items.length === 0) {
     return (
       <div className="container mx-auto px-4 py-20 text-center min-h-screen flex items-center justify-center">
         <div className="animate-fade-in">
@@ -58,44 +35,49 @@ export default function Cart() {
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold mb-2">Shopping Cart</h1>
         <p className="text-muted-foreground text-lg mb-8">
-          {cartItems.length} {cartItems.length === 1 ? 'item' : 'items'} in your cart
+          {items.length} {items.length === 1 ? 'item' : 'items'} in your cart
         </p>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
-            {cartItems.map((item) => (
+            {items.map((item) => (
               <div
-                key={item.id}
+                key={`${item.garmentId}-${item.size}`}
                 className="flex gap-4 bg-card p-6 rounded-2xl border border-border hover:border-primary/50 transition-all animate-fade-in"
               >
                 <Link
-                  to={`/product/${item.productId}`}
+                  to={`/product/${item.garmentId}`}
                   className="relative w-32 h-40 flex-shrink-0 bg-muted rounded-xl overflow-hidden"
                 >
                   <img
-                    src={item.product.imageUrl}
-                    alt={item.product.name}
+                    src={item.imageUrl}
+                    alt={item.name}
                     className="w-full h-full object-cover hover:scale-105 transition-transform"
                   />
                 </Link>
 
                 <div className="flex-1 min-w-0">
                   <Link
-                    to={`/product/${item.productId}`}
+                    to={`/product/${item.garmentId}`}
                     className="font-bold text-lg mb-1 hover:text-primary transition-colors line-clamp-2"
                   >
-                    {item.product.name}
+                    {item.name}
                   </Link>
+                  {item.size && (
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Size: <span className="font-semibold">{item.size}</span>
+                    </p>
+                  )}
                   <p className="text-2xl font-bold text-primary mb-4">
-                    ₹{Number(item.product.price).toLocaleString()}
+                    ₹{item.price.toLocaleString()}
                   </p>
 
                   <div className="flex items-center gap-4">
                     {/* Quantity Selector */}
                     <div className="flex items-center gap-2 border-2 border-border rounded-xl overflow-hidden">
                       <button
-                        onClick={() => addToCart.mutate({ productId: item.productId, quantity: -1 })}
+                        onClick={() => updateQuantity(item.garmentId, item.quantity - 1)}
                         disabled={item.quantity <= 1}
                         className="px-4 py-2 hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                       >
@@ -103,7 +85,7 @@ export default function Cart() {
                       </button>
                       <span className="px-4 font-bold">{item.quantity}</span>
                       <button
-                        onClick={() => addToCart.mutate({ productId: item.productId, quantity: 1 })}
+                        onClick={() => updateQuantity(item.garmentId, item.quantity + 1)}
                         className="px-4 py-2 hover:bg-muted transition-colors"
                       >
                         <Plus className="w-4 h-4" />
@@ -112,7 +94,7 @@ export default function Cart() {
 
                     {/* Remove Button */}
                     <button
-                      onClick={() => removeFromCart.mutate(item.id)}
+                      onClick={() => removeItem(item.garmentId)}
                       className="text-destructive hover:text-destructive/80 flex items-center gap-2 font-semibold transition-colors"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -125,7 +107,7 @@ export default function Cart() {
                 <div className="text-right">
                   <p className="text-sm text-muted-foreground mb-1">Total</p>
                   <p className="text-2xl font-bold">
-                    ₹{(Number(item.product.price) * item.quantity).toLocaleString()}
+                    ₹{(item.price * item.quantity).toLocaleString()}
                   </p>
                 </div>
               </div>

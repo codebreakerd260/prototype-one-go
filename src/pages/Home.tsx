@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom';
 import { Sparkles, Zap, Shield, TrendingUp, Star, ArrowRight } from 'lucide-react';
 import { mockGarments } from '@/data/mockGarments';
 import ProductCard from '@/components/ProductCard';
-import FeatureCard from '@/components/FeatureCard';
-import StatCard from '@/components/StatCard';
 
 export default function Home() {
   const featuredGarments = mockGarments.slice(0, 4);
@@ -171,3 +169,26 @@ export default function Home() {
   );
 }
 
+function FeatureCard({ icon, title, description, gradient }: any) {
+  return (
+    <div className="group p-8 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all hover:shadow-xl animate-fade-in hover:scale-105">
+      <div className={`inline-block p-4 bg-gradient-to-br ${gradient} rounded-2xl mb-6 text-white group-hover:scale-110 transition-transform`}>
+        {icon}
+      </div>
+      <h3 className="text-2xl font-bold mb-3">{title}</h3>
+      <p className="text-muted-foreground leading-relaxed">{description}</p>
+    </div>
+  );
+}
+
+function StatCard({ number, label, icon }: any) {
+  return (
+    <div className="text-center p-8 rounded-2xl bg-muted/50 hover:bg-muted transition-colors animate-fade-in">
+      <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4 text-primary">
+        {icon}
+      </div>
+      <div className="text-5xl font-bold text-primary mb-2">{number}</div>
+      <div className="text-muted-foreground font-medium">{label}</div>
+    </div>
+  );
+}
